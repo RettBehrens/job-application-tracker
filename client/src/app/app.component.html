@@ -1,0 +1,16 @@
+<div class="navbar navbar-default">
+  <div class="container">
+    <div id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="!authenticationService.isLoggedIn()"><a routerLink="/login">Sign in</a></li>
+        <li *ngIf="authenticationService.isLoggedIn()"><a routerLink="/profile">{{ authenticationService.getUserDetails()?.name }}</a></li>
+        <li *ngIf="authenticationService.isLoggedIn()"><a (click)="authenticationService.logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
