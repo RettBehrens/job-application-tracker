@@ -32,8 +32,10 @@ app.use(function(err, req, res, next){
 // routes
 const profileRoutes = require('./routes/profile.js');
 const authenticationRoutes = require('./routes/authentication.js');
+const applicationRoutes = require('./routes/application.js');
 app.use(profileRoutes);
 app.use(authenticationRoutes);
+app.use(applicationRoutes);
 
 // start server
 app.listen(port, () => {

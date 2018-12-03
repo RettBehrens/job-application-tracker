@@ -1,4 +1,4 @@
-import { TokenPayload, AuthenticationService } from './../authentication.service';
+import { AuthenticationService, TokenPayload } from '../services/authentication.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 

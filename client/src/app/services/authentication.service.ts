@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from './../environments/environment';
+import { environment } from '../../environments/environment';
 
 export interface UserDetails {
   _id: string;
@@ -22,7 +22,6 @@ export interface TokenPayload {
   password: string;
   name?: string;
 }
-
 @Injectable()
 export class AuthenticationService {
 
