@@ -1,3 +1,83 @@
-<p>
-  application-details works!
-</p>
+<form
+class="form"
+[formGroup]="applicationFormGroup"
+(ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput formControlName="company" placeholder="Company" />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="position_applied_for"
+      placeholder="Position"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="date_applied"
+      [matDatepicker]="date_applied"
+      placeholder="Date Applied"
+    />
+    <mat-datepicker-toggle matSuffix [for]="date_applied"></mat-datepicker-toggle>
+    <mat-datepicker #date_applied></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="contact_name"
+      placeholder="Contact Name"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="contact_position"
+      placeholder="Contact Position"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="contact_phone"
+      placeholder="Contact Phone"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="contact_email"
+      placeholder="Contact Email"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      formControlName="most_recent_follow_up_date"
+      [matDatepicker]="most_recent_follow_up_date"
+      placeholder="Most Recent Follow Up Date"
+    />
+    <mat-datepicker-toggle matSuffix [for]="most_recent_follow_up_date"></mat-datepicker-toggle>
+    <mat-datepicker #most_recent_follow_up_date></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="number"
+      formControlName="number_of_follow_ups"
+      placeholder="Number Of Follow Ups"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select
+    formControlName="status"
+    placeholder="Status">
+      <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+        {{status.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="button-row">
+    <button type="submit" mat-raised-button color="primary">Save</button>
+  </div>
+</form>
