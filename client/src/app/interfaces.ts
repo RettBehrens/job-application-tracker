@@ -8,6 +8,6 @@ export interface Application {
   contact_email: string;
   most_recent_follow_up_date: Date;
   number_of_follow_ups: number;
-  status: string;
+  status: number;
   user_id: string;
 }

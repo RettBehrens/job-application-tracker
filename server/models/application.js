@@ -35,7 +35,7 @@ const ApplicationSchema = new Schema({
     type: Number
   },
   status: {
-    type: String
+    type: Number
   },
   user_id: {
     type: Schema.Types.ObjectId,

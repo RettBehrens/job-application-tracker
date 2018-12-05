@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationService } from './../services/application.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './application-details.component.html',
   styleUrls: ['./application-details.component.scss']
 })
-export class ApplicationDetailsComponent implements OnInit {
+export class ApplicationDetailsComponent implements AfterViewInit, OnInit {
   public applicationFormGroup: FormGroup;
   private applicationFormGroupValues: any;
   public statusOptions: any[] = [
@@ -19,27 +19,41 @@ export class ApplicationDetailsComponent implements OnInit {
     { value: 3, viewValue: 'Hired' }
   ];
   public editing: boolean = false;
+  private applicationId: string;
 
   constructor(
     private applicationService: ApplicationService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.initializeFormGroup();
     this.applicationFormGroupValueChanges();
 
-    this.activatedRoute.paramMap
-    .pipe(
-      take(1)
-    )
-    .subscribe((params) => {
+    this.activatedRoute.paramMap.pipe(take(1)).subscribe(params => {
       if (params.get('id')) {
         this.editing = true;
+        this.applicationId = params.get('id');
       }
     });
+  }
+
+  ngAfterViewInit() {
+    if (
+      this.editing &&
+      this.applicationId !== null &&
+      this.applicationId !== undefined
+    ) {
+      this.applicationService
+        .fetchApplication(this.applicationId)
+        .subscribe((application: any) => {
+          Object.keys(this.applicationFormGroup.controls).forEach(key => {
+            this.applicationFormGroup.controls[key].setValue(application[key]);
+          });
+        });
+    }
   }
 
   private initializeFormGroup(): void {
@@ -58,19 +72,25 @@ export class ApplicationDetailsComponent implements OnInit {
   }
 
   private applicationFormGroupValueChanges(): void {
-    this.applicationFormGroup.valueChanges.subscribe((applicationFormGroupValues: any) => {
-      this.applicationFormGroupValues = applicationFormGroupValues;
-      this.applicationService.updateApplication(this.applicationFormGroupValues);
-    });
+    this.applicationFormGroup.valueChanges.subscribe(
+      (applicationFormGroupValues: any) => {
+        this.applicationFormGroupValues = applicationFormGroupValues;
+        this.applicationService.updateApplication(
+          this.applicationFormGroupValues
+        );
+      }
+    );
   }
 
   public onSubmit(): void {
-    this.applicationService.saveApplication(this.editing).subscribe((data: any) => {
-      if (data.errors) {
-        console.log(data.errors);
-      } else {
-        this.router.navigateByUrl('/profile');
-      }
-    });
+    this.applicationService
+      .saveApplication(this.editing, this.applicationId)
+      .subscribe((data: any) => {
+        if (data.errors) {
+          console.log(data.errors);
+        } else {
+          this.router.navigateByUrl('/profile');
+        }
+      });
   }
 }

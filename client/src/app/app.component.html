@@ -70,7 +70,7 @@
           </li>
           <li *ngIf="authenticationService.isLoggedIn()">
             <a routerLink="/profile">
-              <mat-icon class="icon">dashboard</mat-icon>
+              <mat-icon class="icon">account_circle</mat-icon>
               <span class="label">{{
                 authenticationService.getUserDetails()?.name
               }}</span>

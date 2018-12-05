@@ -13,4 +13,10 @@ const applicationController = require("../controllers/application");
 
 router.route("/api/application").post(auth, applicationController.postApplication);
 
+router.route("/api/application/:id").put(auth, applicationController.putApplication);
+
+router.route("/api/application/:id").get(auth, applicationController.getApplication);
+
+router.route("/api/application/:id").delete(auth, applicationController.deleteApplication);
+
 module.exports = router;
