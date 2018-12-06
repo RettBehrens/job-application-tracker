@@ -60,13 +60,13 @@ export class ApplicationDetailsComponent implements AfterViewInit, OnInit {
     this.applicationFormGroup = this.formBuilder.group({
       company: ['', Validators.required],
       position_applied_for: ['', Validators.required],
-      date_applied: [new Date(), Validators.required],
+      date_applied: ['', Validators.required],
       contact_name: [''],
       contact_position: [''],
       contact_phone: [''],
       contact_email: [''],
-      most_recent_follow_up_date: [null],
-      number_of_follow_ups: [null],
+      most_recent_follow_up_date: [''],
+      number_of_follow_ups: [0],
       status: [0]
     });
   }

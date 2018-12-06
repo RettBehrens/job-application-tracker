@@ -1,8 +1,22 @@
-<div style="text-align:center">
-  <h1>Welcome!</h1>
-  <p>This is a platform for job seekers to track their job applications.</p>
-  <p>
-    Please <a routerLink="/login">Login</a> or
-    <a routerLink="/register">Register</a>
-  </p>
+<div>
+  <br />
+  <div class="container">
+    <div
+      fxLayout="column"
+      fxLayoutGap="20px"
+      fxLayoutAlign="space-around center"
+      class="content"
+    >
+      <div class="blocks">
+        <button routerLink="/login" mat-raised-button color="primary">
+          Login
+        </button>
+      </div>
+      <div class="blocks">
+        <button routerLink="/register" mat-raised-button color="primary">
+          Register
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
