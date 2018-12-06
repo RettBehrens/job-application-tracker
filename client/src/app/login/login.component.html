@@ -9,24 +9,37 @@
           </mat-card-title>
           <mat-card-content>
             <div class="form-container mat-elevation-z8">
-              <form class="form">
+              <form class="form"
+              [formGroup]="loginFormGroup">
                 <mat-form-field>
                   <input
                     matInput
                     type="email"
-                    name="email"
+                    formControlName="email"
                     placeholder="Enter Email"
-                    [(ngModel)]="credentials.email"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error *ngIf="loginFormGroup.controls.email.hasError('email') && !loginFormGroup.controls.email.hasError('required')">
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="loginFormGroup.controls.email.hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                   <input
                     matInput
                     type="password"
-                    name="password"
+                    formControlName="password"
                     placeholder="Enter Password"
-                    [(ngModel)]="credentials.password"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error *ngIf="loginFormGroup.controls.password.hasError('minlength') && !loginFormGroup.controls.password.hasError('required')">
+                      Password must be at least {{loginFormGroup.controls.password.errors.minlength.requiredLength}} characters
+                    </mat-error>
+                    <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">
+                      Password is <strong>required</strong>
+                    </mat-error>
                 </mat-form-field>
               </form>
             </div>

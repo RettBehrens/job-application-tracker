@@ -12,6 +12,12 @@ module.exports.register = function(req, res){
     user.setPassword(req.body.password);
     user.save(function(err) {
         let token;
+
+        if(err){
+            res.status(404).json(err);
+            return;
+        }
+
         token = user.generateJWT();
         res.status(200);
         res.json({

@@ -9,33 +9,49 @@
           </mat-card-title>
           <mat-card-content>
             <div class="form-container mat-elevation-z8">
-              <form class="form">
+              <form class="form"
+              [formGroup]="registerFormGroup">
                 <mat-form-field>
                   <input
                     matInput
                     type="name"
-                    name="name"
+                    formControlName="name"
                     placeholder="Enter Your Name"
-                    [(ngModel)]="credentials.name"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error *ngIf="registerFormGroup.controls.name.hasError('required')">
+                      Name is <strong>required</strong>
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                   <input
                     matInput
                     type="email"
-                    name="email"
+                    formControlName="email"
                     placeholder="Enter Email"
-                    [(ngModel)]="credentials.email"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error *ngIf="registerFormGroup.controls.email.hasError('email') && !registerFormGroup.controls.email.hasError('required')">
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="registerFormGroup.controls.email.hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                   <input
                     matInput
                     type="password"
-                    name="password"
+                    formControlName="password"
                     placeholder="Enter Password"
-                    [(ngModel)]="credentials.password"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error *ngIf="registerFormGroup.controls.password.hasError('minlength') && !registerFormGroup.controls.password.hasError('required')">
+                      Password must be at least {{registerFormGroup.controls.password.errors.minlength.requiredLength}} characters
+                    </mat-error>
+                    <mat-error *ngIf="registerFormGroup.controls.password.hasError('required')">
+                      Password is <strong>required</strong>
+                    </mat-error>
                 </mat-form-field>
               </form>
             </div>
