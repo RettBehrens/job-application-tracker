@@ -1,18 +1,21 @@
+// angular imports
 import {
-  FormGroup,
   FormBuilder,
-  Validators,
   FormControl,
+  FormGroup,
   FormGroupDirective,
-  NgForm
+  NgForm,
+  Validators
 } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
+
+// service imports
 import {
   AuthenticationService,
   TokenPayload
 } from '../services/authentication.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ErrorStateMatcher } from '@angular/material/core';
 
 export class RegisterErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(

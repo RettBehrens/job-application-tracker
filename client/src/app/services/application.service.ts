@@ -1,9 +1,16 @@
-import { AuthenticationService, UserDetails } from './authentication.service';
-import { environment } from './../../environments/environment';
+// angular imports
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+
+// service imports
+import { AuthenticationService } from './authentication.service';
+
+// environment import
+import { environment } from './../../environments/environment';
+
+// rxjs imports
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ApplicationService {
@@ -11,8 +18,8 @@ export class ApplicationService {
   private application: any;
 
   constructor(
-    private httpClient: HttpClient,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private httpClient: HttpClient
   ) {}
 
   public updateApplication(application: any): void {

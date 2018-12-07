@@ -8,13 +8,31 @@
       class="content"
     >
       <div class="blocks">
-        <button routerLink="/login" mat-raised-button color="primary">
+        <button
+        routerLink="/login"
+        mat-raised-button color="primary"
+        *ngIf="!authenticationService.isLoggedIn()">
           Login
+        </button>
+        <button
+        routerLink="/profile"
+        mat-raised-button color="primary"
+        *ngIf="authenticationService.isLoggedIn()">
+          View Applications
         </button>
       </div>
       <div class="blocks">
-        <button routerLink="/register" mat-raised-button color="primary">
+        <button
+        routerLink="/register"
+        mat-raised-button color="primary"
+        *ngIf="!authenticationService.isLoggedIn()">
           Register
+        </button>
+        <button
+        routerLink="/details"
+        mat-raised-button color="primary"
+        *ngIf="authenticationService.isLoggedIn()">
+          Add Application
         </button>
       </div>
     </div>

@@ -1,18 +1,21 @@
+// angular imports
+import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
   FormBuilder,
-  Validators,
   FormControl,
+  FormGroup,
   FormGroupDirective,
-  NgForm
+  NgForm,
+  Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+// service imports
 import {
   AuthenticationService,
   TokenPayload
 } from '../services/authentication.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ErrorStateMatcher } from '@angular/material/core';
 
 export class LoginErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -74,7 +77,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  public login() {
+  public login(): void {
     if (this.loginFormGroupValid) {
       this.authenticationService.login(this.loginFormGroupValues).subscribe(
         (data: any) => {

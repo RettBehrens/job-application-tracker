@@ -1,4 +1,8 @@
+// angular imports
 import { Component } from '@angular/core';
+
+// service imports
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +11,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  constructor() { }
+  constructor(
+    public authenticationService: AuthenticationService
+  ) { }
 }

@@ -1,8 +1,13 @@
+// angular imports
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
+// rxjs imports
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+// environment import
 import { environment } from '../../environments/environment';
 
 export interface UserDetails {

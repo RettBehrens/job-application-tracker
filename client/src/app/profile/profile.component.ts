@@ -1,8 +1,12 @@
-import { AuthenticationService } from '../services/authentication.service';
+// angular imports
 import { Component, OnInit } from '@angular/core';
-import { ApplicationService } from '../services/application.service';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
+
+// service imports
+import { ApplicationService } from '../services/application.service';
+import { AuthenticationService } from '../services/authentication.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -29,8 +33,8 @@ export class ProfileComponent implements OnInit {
   public loading: boolean = true;
 
   constructor(
-    private authenticationService: AuthenticationService,
     private applicationService: ApplicationService,
+    private authenticationService: AuthenticationService,
     private router: Router
   ) {}
 

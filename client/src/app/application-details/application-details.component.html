@@ -9,23 +9,36 @@
           </mat-card-title>
           <mat-card-content>
             <div class="form-container mat-elevation-z8">
-              <form
-                class="form"
-                [formGroup]="applicationFormGroup"
-              >
+              <form class="form" [formGroup]="applicationFormGroup">
                 <mat-form-field>
                   <input
                     matInput
                     formControlName="company"
                     placeholder="Company"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error
+                    *ngIf="
+                      applicationFormGroup.controls.company.hasError('required')
+                    "
+                    >Company is <strong>required</strong></mat-error
+                  >
                 </mat-form-field>
                 <mat-form-field>
                   <input
                     matInput
                     formControlName="position_applied_for"
                     placeholder="Position"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error
+                    *ngIf="
+                      applicationFormGroup.controls.position_applied_for.hasError(
+                        'required'
+                      )
+                    "
+                    >Position is <strong>required</strong></mat-error
+                  >
                 </mat-form-field>
                 <mat-form-field>
                   <input
@@ -33,7 +46,16 @@
                     formControlName="date_applied"
                     [matDatepicker]="date_applied"
                     placeholder="Date Applied"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error
+                    *ngIf="
+                      applicationFormGroup.controls.date_applied.hasError(
+                        'required'
+                      )
+                    "
+                    >Date Applied is <strong>required</strong></mat-error
+                  >
                   <mat-datepicker-toggle
                     matSuffix
                     [for]="date_applied"
@@ -64,9 +86,18 @@
                 <mat-form-field>
                   <input
                     matInput
+                    type="email"
                     formControlName="contact_email"
                     placeholder="Contact Email"
+                    [errorStateMatcher]="matcher"
                   />
+                  <mat-error
+                    *ngIf="
+                      applicationFormGroup.controls.contact_email.hasError('email')
+                    "
+                  >
+                    Please enter a valid email address
+                  </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                   <input
@@ -106,22 +137,23 @@
       </div>
     </div>
     <br />
-  <div class="container">
     <div class="container">
-      <div
-        fxLayout="column"
-        fxLayoutGap="20px"
-        fxLayout.gt-md="row"
-        fxLayoutAlign="space-around center"
-        class="content"
-      >
-        <div class="blocks">
+      <div class="container">
+        <div
+          fxLayout="column"
+          fxLayoutGap="20px"
+          fxLayout.gt-md="row"
+          fxLayoutAlign="space-around center"
+          class="content"
+        >
+          <div class="blocks">
             <button (click)="onSubmit()" mat-raised-button color="primary">
-                Save
-              </button>
+              Save
+            </button>
+          </div>
         </div>
       </div>
+      <br />
     </div>
-    <br />
   </div>
 </div>
