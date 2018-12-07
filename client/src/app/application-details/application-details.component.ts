@@ -52,6 +52,7 @@ export class ApplicationDetailsComponent
   private applicationId: string;
   public applicationErrorMessage: string;
   private componentAlive: boolean = true;
+  public loading: boolean = true;
 
   public matcher = new ApplicationErrorStateMatcher();
 
@@ -87,7 +88,10 @@ export class ApplicationDetailsComponent
           Object.keys(this.applicationFormGroup.controls).forEach(key => {
             this.applicationFormGroup.controls[key].setValue(application[key]);
           });
+          this.loading = false;
         });
+    } else {
+      this.loading = false;
     }
   }
 
@@ -116,7 +120,7 @@ export class ApplicationDetailsComponent
 
   private applicationFormGroupValueChanges(): void {
     this.applicationFormGroup.valueChanges
-      .pipe(takeWhile((componentAlive: boolean) => this.componentAlive))
+      .pipe(takeWhile((applicationFormGroupValues: any) => this.componentAlive))
       .subscribe((applicationFormGroupValues: any) => {
         this.applicationFormGroupValues = applicationFormGroupValues;
         this.applicationFormGroupValid = this.applicationFormGroup.valid;

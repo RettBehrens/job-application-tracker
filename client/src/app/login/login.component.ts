@@ -1,5 +1,5 @@
 // angular imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -16,6 +16,9 @@ import {
   AuthenticationService,
   TokenPayload
 } from '../services/authentication.service';
+
+// rxjs imports
+import { take, takeWhile } from 'rxjs/operators';
 
 export class LoginErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -36,12 +39,13 @@ export class LoginErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loginFormGroup: FormGroup;
   private loginFormGroupValues: TokenPayload;
   private loginFormGroupKeys: string[];
   private loginFormGroupValid: boolean = false;
   public loginErrorMessage: string;
+  private componentAlive: boolean = true;
 
   public matcher = new LoginErrorStateMatcher();
 
@@ -54,6 +58,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.initializeFormGroup();
     this.loginFormGroupValueChanges();
+  }
+
+  ngOnDestroy() {
+    this.componentAlive = false;
   }
 
   private initializeFormGroup(): void {
@@ -69,28 +77,33 @@ export class LoginComponent implements OnInit {
   }
 
   private loginFormGroupValueChanges(): void {
-    this.loginFormGroup.valueChanges.subscribe(
-      (loginFormGroupValues: TokenPayload) => {
+    this.loginFormGroup.valueChanges
+      .pipe(
+        takeWhile((loginFormGroupValues: TokenPayload) => this.componentAlive)
+      )
+      .subscribe((loginFormGroupValues: TokenPayload) => {
         this.loginFormGroupValues = loginFormGroupValues;
         this.loginFormGroupValid = this.loginFormGroup.valid;
-      }
-    );
+      });
   }
 
   public login(): void {
     if (this.loginFormGroupValid) {
-      this.authenticationService.login(this.loginFormGroupValues).subscribe(
-        (data: any) => {
-          if (data.token) {
-            this.router.navigateByUrl('/profile');
+      this.authenticationService
+        .login(this.loginFormGroupValues)
+        .pipe(take(1))
+        .subscribe(
+          (data: any) => {
+            if (data.token) {
+              this.router.navigateByUrl('/profile');
+            }
+          },
+          (err: any) => {
+            this.loginErrorMessage = err.error.message;
+            alert(this.loginErrorMessage);
+            console.log(err);
           }
-        },
-        (err: any) => {
-          this.loginErrorMessage = err.error.message;
-          alert(this.loginErrorMessage);
-          console.log(err);
-        }
-      );
+        );
     } else {
       this.loginFormGroupKeys.forEach((key: string) => {
         this.loginFormGroup.controls[key].markAsTouched();

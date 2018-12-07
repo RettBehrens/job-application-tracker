@@ -1,5 +1,5 @@
 // angular imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 
@@ -7,12 +7,15 @@ import { Router } from '@angular/router';
 import { ApplicationService } from '../services/application.service';
 import { AuthenticationService } from '../services/authentication.service';
 
+// rxjs imports
+import { take } from 'rxjs/operators';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   public userDetails: any;
   public dataSource: any[];
   public displayedColumns: string[] = [
@@ -31,6 +34,7 @@ export class ProfileComponent implements OnInit {
     3: 'Hired'
   };
   public loading: boolean = true;
+  private componentAlive: boolean = true;
 
   constructor(
     private applicationService: ApplicationService,
@@ -39,7 +43,9 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authenticationService.profile().subscribe(
+    this.authenticationService.profile()
+    .pipe(take(1))
+    .subscribe(
       (user: any) => {
         this.userDetails = user;
         this.dataSource = user.applications;
@@ -54,19 +60,23 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.componentAlive = false;
+  }
+
   onClickEdit(applicationId: string): void {
     this.router.navigateByUrl(`/details/${applicationId}`);
   }
 
   onClickDelete(applicationId: string): void {
-    this.dataSource = this.dataSource.filter((application: any) => {
-      return application._id !== applicationId;
-    });
-
     this.applicationService
       .deleteApplication(applicationId)
+      .pipe(take(1))
       .subscribe((data: any) => {
         console.log(data);
+        this.dataSource = this.dataSource.filter((application: any) => {
+          return application._id !== applicationId;
+        });
       });
   }
 }

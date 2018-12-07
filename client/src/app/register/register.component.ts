@@ -7,7 +7,7 @@ import {
   NgForm,
   Validators
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 
@@ -16,6 +16,9 @@ import {
   AuthenticationService,
   TokenPayload
 } from '../services/authentication.service';
+
+// rxjs imports
+import { take, takeWhile } from 'rxjs/operators';
 
 export class RegisterErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -36,12 +39,13 @@ export class RegisterErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   public registerFormGroup: FormGroup;
   private registerFormGroupValues: TokenPayload;
   private registerFormGroupKeys: string[];
   private registerFormGroupValid: boolean = false;
   public registerErrorMessage: string;
+  private componentAlive: boolean = true;
 
   public matcher = new RegisterErrorStateMatcher();
 
@@ -54,6 +58,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.initializeFormGroup();
     this.registerFormGroupValueChanges();
+  }
+
+  ngOnDestroy() {
+    this.componentAlive = false;
   }
 
   private initializeFormGroup(): void {
@@ -70,7 +78,9 @@ export class RegisterComponent implements OnInit {
   }
 
   private registerFormGroupValueChanges(): void {
-    this.registerFormGroup.valueChanges.subscribe(
+    this.registerFormGroup.valueChanges
+    .pipe(takeWhile((registerFormGroupValues: TokenPayload) => this.componentAlive))
+    .subscribe(
       (registerFormGroupValues: TokenPayload) => {
         this.registerFormGroupValues = registerFormGroupValues;
         this.registerFormGroupValid = this.registerFormGroup.valid;
@@ -82,6 +92,7 @@ export class RegisterComponent implements OnInit {
     if (this.registerFormGroupValid) {
       this.authenticationService
         .register(this.registerFormGroupValues)
+        .pipe(take(1))
         .subscribe(
           (data: any) => {
             if (data.token) {
