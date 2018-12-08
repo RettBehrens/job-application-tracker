@@ -25,6 +25,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.methods.setPassword = function(password){
+    console.log('set password hit');
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
@@ -35,6 +36,7 @@ UserSchema.methods.validPassword = function(password){
 };
 
 UserSchema.methods.generateJWT = function(){
+    console.log('generate jwt hit');
     let expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
 

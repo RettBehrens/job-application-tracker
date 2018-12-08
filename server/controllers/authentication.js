@@ -5,15 +5,20 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 module.exports.register = function(req, res){
+    console.log('register controller hit');
+    console.log(req.body);
     let user = new User();
+    console.log(user);
 
     user.name = req.body.name;
     user.email = req.body.email;
     user.setPassword(req.body.password);
     user.save(function(err) {
+        console.log('save hit');
         let token;
 
         if(err){
+            console.log('error saving');
             res.status(404).json(err);
             return;
         }
