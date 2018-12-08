@@ -88,10 +88,14 @@ export class ApplicationDetailsComponent
           Object.keys(this.applicationFormGroup.controls).forEach(key => {
             this.applicationFormGroup.controls[key].setValue(application[key]);
           });
-          this.loading = false;
+          Promise.resolve().then(() => {
+            this.loading = false;
+          });
         });
     } else {
-      this.loading = false;
+      Promise.resolve().then(() => {
+        this.loading = false;
+      });
     }
   }
 

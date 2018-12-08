@@ -1,7 +1,7 @@
 // angular imports
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 // service imports
 import { ApplicationService } from '../services/application.service';
@@ -16,8 +16,11 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   public userDetails: any;
-  public dataSource: any[];
+  public dataSource: any;
   public displayedColumns: string[] = [
     'company',
     'position_applied_for',
@@ -52,6 +55,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.dataSource.forEach((application: any) => {
           application.status = this.statusOptions[application.status];
         });
+        this.dataSource = new MatTableDataSource<any>(this.dataSource);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.loading = false;
       },
       err => {
@@ -64,11 +70,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.componentAlive = false;
   }
 
-  onClickEdit(applicationId: string): void {
+  public applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public onClickEdit(applicationId: string): void {
     this.router.navigateByUrl(`/details/${applicationId}`);
   }
 
-  onClickDelete(applicationId: string): void {
+  public onClickDelete(applicationId: string): void {
     this.applicationService
       .deleteApplication(applicationId)
       .pipe(take(1))

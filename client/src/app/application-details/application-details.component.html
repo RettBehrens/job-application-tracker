@@ -7,7 +7,8 @@
           <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
             <h3>Application Details</h3>
           </mat-card-title>
-          <mat-card-content>
+          <mat-spinner *ngIf="loading"></mat-spinner>
+          <mat-card-content *ngIf="!loading">
             <div class="form-container mat-elevation-z8">
               <form class="form" [formGroup]="applicationFormGroup">
                 <mat-form-field>
@@ -93,7 +94,9 @@
                   />
                   <mat-error
                     *ngIf="
-                      applicationFormGroup.controls.contact_email.hasError('email')
+                      applicationFormGroup.controls.contact_email.hasError(
+                        'email'
+                      )
                     "
                   >
                     Please enter a valid email address

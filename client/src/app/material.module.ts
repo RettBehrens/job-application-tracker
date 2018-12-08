@@ -8,8 +8,11 @@ import {
     MatInputModule,
     MatListModule,
     MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSortModule,
     MatTableModule,
     MatToolbarModule
 } from '@angular/material';
@@ -24,8 +27,11 @@ import {
         MatInputModule,
         MatListModule,
         MatNativeDateModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSortModule,
         MatTableModule,
         MatToolbarModule
     ],
@@ -38,8 +44,11 @@ import {
         MatInputModule,
         MatListModule,
         MatNativeDateModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSortModule,
         MatTableModule,
         MatToolbarModule
     ]
