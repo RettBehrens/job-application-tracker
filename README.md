@@ -3,16 +3,16 @@
 This is a platform for job seekers to track their applications during their job search. Inspired by an unwieldy spreadsheet experience.
 
 This is a MEAN stack application. Technologies used include:
-..* Angular
-..* Angular FlexLayout
-..* Angular Material
-..* Express
-..* JSON Web Tokens (JWT)
-..* MongoDB
-..* Mongoose
-..* Passport
-..* RxJS
-..* Node
+* Angular
+* Angular FlexLayout
+* Angular Material
+* Express
+* JSON Web Tokens (JWT)
+* MongoDB
+* Mongoose
+* Passport
+* RxJS
+* Node
 
 
 ## Heroku Link:
