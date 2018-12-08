@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect(
-    process.env.MONGOBD_URI ||
+    process.env.MONGODB_URI ||
     process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
     'mongodb://localhost/job-application-tracker'
