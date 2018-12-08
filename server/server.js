@@ -48,37 +48,37 @@ const forceSSL = function() {
 
 app.use(forceSSL());
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist/job-application-tracker')));
 
 app.get('/', function(req, res) {
   if (port === '3000') {
-    res.sendFile('/client/dist/index.html');
+    res.sendFile('/client/dist/job-application-tracker/index.html');
   } else {
-    res.sendFile('/app/client/dist/index.html');
+    res.sendFile('/app/client/dist/job-application-tracker/index.html');
   }
 });
 
 app.get('/login', function(req, res) {
   if (port === '3000') {
-    res.sendFile('/client/dist/index.html');
+    res.sendFile('/client/dist/job-application-tracker/index.html');
   } else {
-    res.sendFile('/app/client/dist/index.html');
+    res.sendFile('/app/client/dist/job-application-tracker/index.html');
   }
 });
 
 app.get('/register', function(req, res) {
   if (port === '3000') {
-    res.sendFile('/client/dist/index.html');
+    res.sendFile('/client/dist/job-application-tracker/index.html');
   } else {
-    res.sendFile('/app/client/dist/index.html');
+    res.sendFile('/app/client/dist/job-application-tracker/index.html');
   }
 });
 
 app.get('/profile', function(req, res) {
   if (port === '3000') {
-    res.sendFile('/client/dist/index.html');
+    res.sendFile('/client/dist/job-application-tracker/index.html');
   } else {
-    res.sendFile('/app/client/dist/index.html');
+    res.sendFile('/app/client/dist/job-application-tracker/index.html');
   }
 });
 
