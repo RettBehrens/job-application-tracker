@@ -26,7 +26,7 @@
             </h3>
           </mat-card-title>
           <mat-spinner *ngIf="loading"></mat-spinner>
-          <mat-card-content *ngIf="!loading">
+          <mat-card-content [ngClass]="{'hidden': loading}">
             <div class="table-container mat-elevation-z8">
               <mat-form-field class="filter">
                 <input

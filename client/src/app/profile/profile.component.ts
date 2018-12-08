@@ -1,6 +1,7 @@
 // angular imports
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataSource } from '@angular/cdk/table';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 // service imports
@@ -84,7 +85,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((data: any) => {
         console.log(data);
-        this.dataSource = this.dataSource.filter((application: any) => {
+        this.dataSource.data = this.dataSource.data.filter((application: any) => {
           return application._id !== applicationId;
         });
       });
