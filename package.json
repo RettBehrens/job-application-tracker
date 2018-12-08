@@ -18,6 +18,9 @@
     "url": "https://github.com/RettBehrens/job-application-tracker/issues"
   },
   "homepage": "https://github.com/RettBehrens/job-application-tracker#readme",
+  "engines": {
+    "node": "11.2.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
