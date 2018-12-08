@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 // environment import
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 export interface UserDetails {
   _id: string;

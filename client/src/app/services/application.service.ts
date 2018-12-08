@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 
 // environment import
-import { environment } from './../../environments/environment';
+import { environment } from './../../environments/environment.prod';
 
 // rxjs imports
 import { map } from 'rxjs/operators';
