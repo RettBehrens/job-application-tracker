@@ -96,7 +96,7 @@ function deleteApplication(req, res) {
       .then(application => {
         return db.User.findOneAndUpdate(
           { _id: req.payload._id },
-          { $unset: { applications: application._id } },
+          { $pull: { applications: application._id } },
           { new: true }
         );
       })
